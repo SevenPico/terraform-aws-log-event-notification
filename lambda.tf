@@ -25,7 +25,7 @@ module "lambda" {
   source_code_hash                    = filebase64sha256(data.archive_file.lambda_zip[0].output_path)
   file_system_config                  = null
   function_name                       = "LogToNotificationTransformer"
-  handler                             = "index.lambda_handler"
+  handler                             = "index.handler"
   ignore_external_function_updates    = false
   image_config                        = {}
   image_uri                           = null
