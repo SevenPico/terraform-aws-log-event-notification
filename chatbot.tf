@@ -5,6 +5,7 @@ module "chatbot_role" {
   source     = "SevenPicoForks/iam-role/aws"
   version    = "2.0.1"
   context    = module.context.self
+  enabled    = module.context.enabled && var.enable_slack_chatbot
   attributes = ["chatbot", "service", "role"]
 
   role_description         = "AWS ChatBot Assume role"
