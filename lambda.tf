@@ -60,11 +60,10 @@ module "lambda" {
 }
 
 resource "aws_lambda_permission" "subscription_filter_log_events_permission" {
-  for_each      = toset(var.log_group_names)
   statement_id  = "AllowExecutionFromCloudWatchLogs"
   action        = "lambda:InvokeFunction"
   function_name = module.lambda.function_name
   principal     = "logs.amazonaws.com"
-  source_arn    = "${local.arn_prefix}:logs:${local.region}:${local.account_id}:log-group::*"
+  source_arn    = "${local.arn_prefix}:logs:${local.region}:${local.account_id}:log-group:*:*"
 }
 
