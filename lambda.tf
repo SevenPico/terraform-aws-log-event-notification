@@ -1,16 +1,4 @@
 #------------------------------------------------------------------------------
-# Lambda Context
-#------------------------------------------------------------------------------
-module "lambda_context" {
-  source     = "SevenPico/context/null"
-  version    = "2.0.0"
-  context    = module.context.self
-  enabled    = module.context.enabled
-  attributes = ["lambda"]
-}
-
-
-#------------------------------------------------------------------------------
 # Lambda Function
 #------------------------------------------------------------------------------
 data "archive_file" "lambda_zip" {
@@ -23,7 +11,7 @@ data "archive_file" "lambda_zip" {
 module "lambda" {
   source  = "registry.terraform.io/SevenPicoForks/lambda-function/aws"
   version = "2.0.3"
-  context = module.lambda_context.self
+  context = module.context.self
 
   architectures                       = null
   cloudwatch_event_rules              = {}
