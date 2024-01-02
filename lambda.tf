@@ -24,7 +24,7 @@ module "lambda" {
   filename                            = data.archive_file.lambda_zip[0].output_path
   source_code_hash                    = filebase64sha256(data.archive_file.lambda_zip[0].output_path)
   file_system_config                  = null
-  function_name                       = module.context.id
+  function_name                       = "log-event-notification-lambda-function"
   handler                             = "index.lambda_handler"
   ignore_external_function_updates    = false
   image_config                        = {}
