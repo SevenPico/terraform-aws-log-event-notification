@@ -6,7 +6,7 @@ module "log_event_notification" {
     aws_cloudwatch_log_group.log_group_2[0].name,
     aws_cloudwatch_log_group.log_group_3[0].name
   ]
-  enable_slack_chatbot = false
-  slack_workspace_id   = "" # Required when enable_slack_chatbot = true
-  slack_channel_id     = "" # Required when enable_slack_chatbot = true
+  enable_slack_chatbot = true
+  slack_workspace_id   = var.slack_workspace_id # Required when enable_slack_chatbot = true
+  slack_channel_id     = var.slack_channel_id # Required when enable_slack_chatbot = true
 }
