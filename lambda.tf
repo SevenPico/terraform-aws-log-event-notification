@@ -6,7 +6,7 @@ module "lambda_context" {
   version    = "2.0.0"
   context    = module.context.self
   enabled    = module.context.enabled
-  attributes = ["log", "event", "notification", "lambda"]
+  attributes = ["lambda"]
 }
 
 
