@@ -17,11 +17,12 @@
 
 ## ----------------------------------------------------------------------------
 ##  _context.tf
+##
 ##  Copied and adapted from terraform-null-label (https://github.com/cloudposse/terraform-null-label/blob/master/exports/context.tf)
 ## ----------------------------------------------------------------------------
 
 #
-# ONLY EDIT THIS FILE IN github.com/cloudposse/terraform-null-label
+# ONLY EDIT THIS FILE IN github.com/SevenPico/terraform-null-context
 # All other instances of this file should be a copy of that one
 #
 #

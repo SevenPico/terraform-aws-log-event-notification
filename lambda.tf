@@ -24,7 +24,7 @@ module "lambda" {
   filename                            = data.archive_file.lambda_zip[0].output_path
   source_code_hash                    = filebase64sha256(data.archive_file.lambda_zip[0].output_path)
   file_system_config                  = null
-  function_name                       = "log-event-notification-lambda-function"
+  function_name                       = "LogToNotificationTransformer"
   handler                             = "index.lambda_handler"
   ignore_external_function_updates    = false
   image_config                        = {}
@@ -48,7 +48,7 @@ module "lambda" {
   publish                             = false
   reserved_concurrent_executions      = -1
   role_name                           = "${module.context.id}-lambda-role"
-  runtime                             = "python3.9"
+  runtime                             = "nodejs18.x"
   s3_bucket                           = null
   s3_key                              = null
   s3_object_version                   = null
@@ -59,12 +59,12 @@ module "lambda" {
   vpc_config                          = null
 }
 
-resource "aws_lambda_permission" "subscription_filter_log_events" {
+resource "aws_lambda_permission" "subscription_filter_log_events_permission" {
   for_each      = toset(var.log_group_names)
   statement_id  = "AllowExecutionFromCloudWatchLogs"
   action        = "lambda:InvokeFunction"
   function_name = module.lambda.function_name
   principal     = "logs.amazonaws.com"
-  source_arn    = "${local.arn_prefix}:logs:${local.region}:${local.account_id}:log-group:*:*"
+  source_arn    = "${local.arn_prefix}:logs:${local.region}:${local.account_id}:log-group::*"
 }
 
