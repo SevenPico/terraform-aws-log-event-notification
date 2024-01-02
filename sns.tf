@@ -74,6 +74,14 @@ data "aws_iam_policy_document" "lambda_role_policy_doc" {
       module.sns_info.topic_arn
     ]
   }
+  statement {
+    sid     = "AllowPub"
+    effect  = "Allow"
+    actions = ["kms:GenerateDataKey","kms:Decrypt",]
+    resources = [
+      module.sns_kms_key.key_arn
+    ]
+  }
 }
 
 resource "aws_iam_policy" "lambda_role_policy" {
