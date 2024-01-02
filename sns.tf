@@ -58,3 +58,36 @@ module "sns_info" {
   pub_principals    = {}
   sub_principals    = {}
 }
+
+data "aws_iam_policy_document" "lambda_role_policy_doc" {
+  count = module.context.enabled ? 1 : 0
+
+  policy_id = module.context.id
+
+  statement {
+    sid     = "AllowPub"
+    effect  = "Allow"
+    actions = ["SNS:Publish"]
+    resources = [
+      module.sns_error.topic_arn,
+      module.sns_warn.topic_arn,
+      module.sns_info.topic_arn
+    ]
+  }
+}
+
+resource "aws_iam_policy" "lambda_role_policy" {
+  count       = module.context.enabled ? 1 : 0
+  name        = "${module.context.id}-sns-permission-policy"
+  description = "Permission To Allow Lambda to Publish To Sns."
+  policy      = data.aws_iam_policy_document.lambda_role_policy_doc[0].json
+}
+
+resource "aws_iam_policy_attachment" "lambda_role_policy_attachment" {
+  count      = module.context.enabled ? 1 : 0
+  name       = "${module.context.id}-sns-permission-policy-attachment"
+  roles      = ["${module.context.id}-lambda-role"]
+  policy_arn = aws_iam_policy.lambda_role_policy[0].arn
+}
+
+
