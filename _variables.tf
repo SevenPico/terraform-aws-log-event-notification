@@ -1,4 +1,4 @@
-variable "log_group_arns" {
+variable "log_group_names" {
   type        = list(string)
   default     = []
   description = "List of all Log group arns for subscription filter needs to be created."
