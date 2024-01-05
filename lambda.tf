@@ -21,8 +21,8 @@ module "lambda" {
   cloudwatch_log_subscription_filters = {}
   description                         = "Lambda function to send custom message to Sns"
   event_source_mappings               = {}
-  filename                            = data.archive_file.lambda_zip[0].output_path
-  source_code_hash                    = filebase64sha256(data.archive_file.lambda_zip[0].output_path)
+  filename                            = try(data.archive_file.lambda_zip[0].output_path, null)
+  source_code_hash                    = try(filebase64sha256(data.archive_file.lambda_zip[0].output_path),"")
   file_system_config                  = null
   function_name                       = "LogToNotificationTransformer"
   handler                             = "index.handler"
