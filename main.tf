@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_subscription_filter" "log_group_subscription_filter" {
-  for_each        = module.context.enabled ? toset(var.log_group_names) : 0
+  for_each        = module.context.enabled ? toset(var.log_group_names) : []
   name            = "Error-Info-Warn"
   log_group_name  = each.value
   filter_pattern  = var.subscription_filter_pattern
