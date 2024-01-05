@@ -24,7 +24,7 @@ module "lambda" {
   filename                            = try(data.archive_file.lambda_zip[0].output_path, null)
   source_code_hash                    = try(filebase64sha256(data.archive_file.lambda_zip[0].output_path),"")
   file_system_config                  = null
-  function_name                       = "LogToNotificationTransformer"
+  function_name                       = "${module.context.id}-log-notification-transformer"
   handler                             = "index.handler"
   ignore_external_function_updates    = false
   image_config                        = {}
@@ -64,6 +64,6 @@ resource "aws_lambda_permission" "subscription_filter_log_events_permission" {
   action        = "lambda:InvokeFunction"
   function_name = module.lambda.function_name
   principal     = "logs.amazonaws.com"
-  source_arn    = "${local.arn_prefix}:logs:${local.region}:${local.account_id}:log-group:${each.key}:*"
+  source_arn    = "${local.arn_prefix}:logs:${local.region}:${local.account_id}:log-group:${each.value}:*"
 }
 
