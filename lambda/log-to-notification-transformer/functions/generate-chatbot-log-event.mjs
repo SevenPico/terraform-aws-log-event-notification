@@ -1,7 +1,6 @@
 import { REGION, ACCOUNT_NUMBER, DEPLOYMENT_ENVIRONMENT } from '../constants/index.mjs';
 
 export function generateChatbotLogEvent({ parsedData, cloudWatchEventData }) {
-  const { connectorName, timeOfError, connector, taskId, errorMessage, errorSource } = parsedData;
 
   const dateFilter =`$3Fstart$3D${cloudWatchEventData.timestamp}$26end$${cloudWatchEventData.timestamp+1000}`;
   const cloudWatchLogsLink = `https://console.aws.amazon.com/cloudwatch/home?region=${REGION}#logsV2:log-groups/log-group/${encodeURIComponent(cloudWatchEventData.logGroup)}/log-events/${encodeURIComponent(cloudWatchEventData.logStream)}/${dateFilter}`;
@@ -18,11 +17,6 @@ export function generateChatbotLogEvent({ parsedData, cloudWatchEventData }) {
       nextSteps: [cloudWatchLogsLink],
       keywords: [],
     },
-    // metadata: {
-    //   summary: `Error in MSK Connector: ${connectorName}, region: ${REGION} `,
-    //   eventType: "Error",
-    //   relatedResources: []
-    // }
   };
   console.log(JSON.stringify(logEvent, null, 2));
 
@@ -32,17 +26,17 @@ export function generateChatbotLogEvent({ parsedData, cloudWatchEventData }) {
 function getTitle({ logType }) {
   switch (logType) {
     case 'ERROR':
-      return `🚩 [Error] Msk connector throw an exception | ${REGION} | ${ACCOUNT_NUMBER}`;
+      return `🚩 [Error] There was an Exception | ${REGION} | ${ACCOUNT_NUMBER}`;
     case 'INFO':
-      return `ℹ️ [Info] Msk connector is <todo: Detect state of the connector from logs> | ${REGION} | ${ACCOUNT_NUMBER}`;
+      return `ℹ️ [Info] | ${REGION} | ${ACCOUNT_NUMBER}`;
     case 'WARN':
-      return `⚠️ [Warn] Msk connector threw a warning | ${REGION} | ${ACCOUNT_NUMBER}`;
+      return `⚠️ [Warn] There was a warning | ${REGION} | ${ACCOUNT_NUMBER}`;
     default:
-      return "😕 MSK connector emmited an unrecognised log | ${REGION} | ${ACCOUNT_NUMBER}";
+      return `😕 Unrecognised log | ${REGION} | ${ACCOUNT_NUMBER}`;
   }
 }
 
-function getDescription({ connectorName, timeOfOrigin, connector, taskId, messageText, errorSource, logType, originalMessage }, cloudWatchEventData) {
+function getDescription({ messageText, logType, originalMessage }, cloudWatchEventData) {
   switch (logType) {
     case 'ERROR':
     case 'INFO':
@@ -51,11 +45,9 @@ function getDescription({ connectorName, timeOfOrigin, connector, taskId, messag
 > Timestamp: 
 > ${cloudWatchEventData.timestamp}
 
-> Enviornment: 
+> Environment: 
 > ${DEPLOYMENT_ENVIRONMENT}
 
-> Connector Name:
-> ${connectorName}
 
 \`\`\`${messageText}\`\`\`
 `;

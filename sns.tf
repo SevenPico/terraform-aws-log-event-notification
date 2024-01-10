@@ -77,7 +77,7 @@ data "aws_iam_policy_document" "lambda_role_policy_doc" {
   statement {
     sid     = "AllowDecrypt"
     effect  = "Allow"
-    actions = ["kms:GenerateDataKey","kms:Decrypt",]
+    actions = ["kms:GenerateDataKey", "kms:Decrypt"]
     resources = [
       module.sns_kms_key.key_arn
     ]
