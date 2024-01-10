@@ -2,7 +2,7 @@ module "log_event_notification" {
   source                      = "../../"
   context                     = module.context.self
 
-  subscription_filter_pattern = "%\\] ERROR \\[|] INFO \\[|] WARN \\[%"
+  subscription_filter_pattern = "%ERROR|INFO|WARN%"
   log_group_names = [
     try(aws_cloudwatch_log_group.log_group_1[0].name, ""),
     try(aws_cloudwatch_log_group.log_group_2[0].name, ""),
