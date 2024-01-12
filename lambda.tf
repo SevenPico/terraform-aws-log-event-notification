@@ -22,7 +22,7 @@ module "lambda" {
   description                         = "Lambda function to send custom message to Sns"
   event_source_mappings               = {}
   filename                            = try(data.archive_file.lambda_zip[0].output_path, null)
-  source_code_hash                    = try(filebase64sha256(data.archive_file.lambda_zip[0].output_path),"")
+  source_code_hash                    = try(filebase64sha256(data.archive_file.lambda_zip[0].output_path), "")
   file_system_config                  = null
   function_name                       = "${module.context.id}-log-notification-transformer"
   handler                             = "index.handler"

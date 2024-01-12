@@ -32,7 +32,7 @@ module "chatbot_role" {
 resource "awscc_chatbot_slack_channel_configuration" "chatbot_slack" {
   count              = module.context.enabled && var.enable_slack_chatbot ? 1 : 0
   configuration_name = "${module.context.id}-log-events-notification"
-#  guardrail_policies = []
+  #  guardrail_policies = []
   iam_role_arn       = module.chatbot_role.arn
   logging_level      = "NONE"
   slack_channel_id   = var.slack_channel_id

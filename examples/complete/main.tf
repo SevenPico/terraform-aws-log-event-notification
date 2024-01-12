@@ -1,6 +1,6 @@
 module "log_event_notification" {
-  source                      = "../../"
-  context                     = module.context.self
+  source  = "../../"
+  context = module.context.self
 
   subscription_filter_pattern = "%ERROR|INFO|WARN%"
   log_group_names = [
