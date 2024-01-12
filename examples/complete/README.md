@@ -1,10 +1,7 @@
 # Aws Log Events Notification Module 
-This module triggers a Lambda whenever there is a pattern match on a Cloudwatch log subscription filter. That lambda then sends a ChatBot Custom Message Schema event to the given SNS topics.
+This Example integrates Log Events Notification Module with log groups. 
 
 It deploys the following.
-- 3 sns topics: For Info, Warning and Error messages.
-- Attaches Cloud watch subscription filter to given set of log groups.
-- A lambda function, that is triggered by the subscription filter.
+- Set of log groups: Which will be fed into the module  
 
-> This module Does not include the SNS to Aws Chat-bot connection.  
- 
+> This module Does not include the configuration of Aws Chat-bot subscription. 

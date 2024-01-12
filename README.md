@@ -5,6 +5,7 @@ It deploys the following.
 - 3 sns topics: For Info, Warning and Error messages.
 - Attaches Cloud watch subscription filter to given set of log groups.
 - A lambda function, that is triggered by the subscription filter.
+- SNS tp Chatbot configuration
 
-> This module Does not include the SNS to Aws Chat-bot connection.  
+> This module Does not include the configuration of Aws Chat-bot subscription.  
  
